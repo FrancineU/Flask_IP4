@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% import 'main/macros.html' as macro %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock%}
+
+{% block content %}
+<header id="writer-page-header">
+    <div class="container">
+        <h2 class="text-center">User Profile</h2>
+      <div class="row">
+          <!--Displaying writer profile pic-->
+          <div class="col-md-4">
+              {% if writer.profile_pic_path %}
+              <img src="{{url_for('static', filename=writer.profile_pic_path)}}" alt="writer profile picture" class="img-fluid">
+              {% else %}
+              <img src="{{url_for('static', filename='image/image/default.jpg')}}" alt="default writer profile picture" class="img-fluid">
+              {% endif %} 
+
+                <form action="{{url_for('main.update_writer_pic', uname=writer.email)}}" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="photo" class="form-control" required>
+                    <input type="submit" value="Submit">
+                </form>
+          </div>
+            <div class="col-md-8 text-dark">
+               
+                <h5>{{ writer.fullname }}</h5>
+
+                <!--Displaying bio if available-->
+                {% if writer.bio %}
+                <p class="lead">{{writer.bio}}</p>
+                {% else %}
+                <div class="alert alert-danger"><p>No bio available</p></div>
+                {% endif %}
+
+                <a href="{{url_for('main.update_profile', uname = writer.email)}}" class="btn btn-info">Edit Profile</a>
+            </div>
+      </div>
+    </div>
+  </header>
+
+ <!--BLOG SECTION-->
+ <section id="blog" class="py-3">
+     <div class="container">
+        <div class="row">
+            <div class="col">
+                {% if blogs %}
+                <div class="card-columns">
+                   {{ macro.displayAllBlogs(blogs) }}
+                </div>
+                {% else %}
+                <div class="alert alert-info text-center">
+                    You didn't create any blog for now
+                    <br>
+                    <a href="{{url_for('main.save_new_blog')}}" class="btn btn-primary">Create a blog</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+     </div>
+ </section>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% import 'main/macros.html' as macro %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock%}
+
+{% block content %}
+<header id="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 m-auto text-center text-white">
+          <h1>{{blog.blog_title}}</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+ <!--BLOG SECTION-->
+ <section id="blog" class="py-3">
+     <div class="container">
+         <div class="row">
+             <div class="col-md-6">
+                     <div class="card">
+                         {% if blog.blog_pic_path %}
+                         <img src="{{url_for('static', filename=blog.blog_pic_path)}}" alt="blog picture" class="img-fluid card-img-top">
+                         {% else %}
+                         <img src="https://source.unsplash.com/random/300x200" alt="random picture" class="img-fluid card-img-top">
+                         {% endif %}
+
+                         {% if blog.writer.email == current_user.email %}
+                         <form action="{{url_for('main.update_blog_pic', id=blog.id)}}" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="photo" class="form-control" required>
+                            <input type="submit" value="Submit">
+                        </form>
+                        {% endif %}
+                         <div class="card-body">
+                             <h4 class="card-title">{{ blog.blog_title }}</h4>
+                             <small class="text-muted">Written by {{blog.writer.fullname}} on {{blog.posted_date}}</small>
+                             <hr>
+                             <p class="card-text">
+                                {{ blog.blog_message }}
+                             </p>
+                         </div>
+                         {% if current_user.is_authenticated and current_user.email == blog.writer.email %}
+                         <div class="card-footer">
+                            <a href="{{url_for('main.update_blog', id = blog.id)}}" class="btn btn-warning">Edit Blog</a>
+                            <a href="{{url_for('main.delete_blog', id = blog.id)}}" class="btn btn-danger">Delete Blog</a>
+                         </div>
+                         {% endif%}
+                     </div>
+             </div>
+             <div class="col-md-6">
+    
+                 <div class="row">
+                     <div class="col-2"></div>
+                     <div class="col-10">
+                        <div class="card">
+                            <div class="card-form">
+                                <div class="card-title"><h3>Add Comment</h3></div>
+                                {{ wtf.quick_form(comment_form)}}
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                 <div class="row">
+                     <div class="col-2"></div>
+                     <div class="col-10">
+                        <h2 class="text-center">Comments</h2>
+                        <hr>
+                        {% if comments %}
+                        <div class="card" style="width: 28rem;">
+                            <ul class="list-group list-group-flush">
+                              {{ macro.displayComments(comments, current_user.email, blog.writer.email)}}
+                            </ul>
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center">O comments</p>
+                        {% endif %}
+
+                     </div> 
+                 </div>
+             </div>
+         </div>
+     </div>
+ </section>
+{% endblock %}

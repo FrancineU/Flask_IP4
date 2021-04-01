@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <section id="home-section">
+        <div class="dark-overlay">
+            <div class="container">
+                <div class="row justify-content-center ">
+                    <div class="col-md-8 pt-5">
+                        <div class="d-sm-block text-center text-white pt-5 mb-5">
+                            <h1 class="display-3">Belamblog</h1>
+                            <p class="lead pt-4">
+                                Create your own beautiful blog <br>
+                                Share your toughts
+                            </p>
+                            <a href="{{url_for('main.save_new_blog')}}" class="btn btn-danger btn-lg">Start Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Some Blog post SECTION-->
+    <section id="home-icons" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 text-center"></div>
+
+                <div class="col-md-6 mb-4 text-center">
+                    <i class="fas fa-quote-right fa-3x mb-2"></i>
+                    <h3 class="pb-3">Motivational Quote</h3>
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            {{quote.quote}}
+                        </p>
+                        <footer class="blockquote-footer">
+                            {{quote.quote_author}}
+                        </footer>
+                    </blockquote>
+    
+                </div>
+
+                <div class="col-md-3 mb-4 text-center"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- <h1>Welcome</h1>
+    <h2>Random Quote</h2>
+    <p>
+        {{ quote.quote}}
+        <small>By {{ quote.quote_author}}</small>
+    </p>
+    {% if all_blogs %}
+        {% for blog in all_blogs%}
+            <p>
+                {{ blog.blog_message }}
+            </p>
+            <a href="{{url_for('main.add_comment', id = blog.id)}}" class="btn">Comment</a>
+            <a href="{{url_for('main.update_blog', id = blog.id)}}" class="btn btn-warning">Edit Blog message</a>
+            <a href="{{url_for('main.delete_blog', id = blog.id)}}" class="btn btn-danger">Delete Blog</a>
+        {% endfor %}
+    {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="alert alert-info">
+                            There is no blogs available for now
+                            <br>
+                            <a href="{{url_for('main.save_new_blog')}}" class="btn btn-primary">Create a blog</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        
+    {% endif%} -->
+{% endblock%}

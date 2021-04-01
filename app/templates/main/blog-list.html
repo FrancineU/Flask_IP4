@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% import 'main/macros.html' as macro %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock%}
+
+{% block content%}
+
+    <!--PAGE HEADER-->
+    <header id="page-header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 m-auto text-center text-white">
+              <h1>All Blogs</h1>
+              <p>
+                Find all blogs written by others
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+  
+     <!--BLOG SECTION-->
+     <section id="blog" class="py-3">
+         
+         <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% if blogs %}
+                    <div class="card-columns">
+                       {{ macro.displayAllBlogs(blogs) }}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info text-center">
+                        There is no blogs available for now
+                        <br>
+                        <a href="{{url_for('main.save_new_blog')}}" class="btn btn-primary">Create a blog</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+           
+     </section>
+{% endblock%}
