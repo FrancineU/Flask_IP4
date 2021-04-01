@@ -13,4 +13,4 @@ This application is a website used to create a personal blogging website where a
 * Flask framework
 * PostgreSQL Database
 ## Contact information
-* Email: bellamandy45@gmail.com
+* Email:uwizeyimanafrancine62@gmail.com
